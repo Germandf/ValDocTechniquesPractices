@@ -1,11 +1,17 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Paths {
 
 	private List<Arc> arcs;
 	private List<Node> nodes;
+	
+	public Paths() {
+		this.arcs = new ArrayList<Arc>();
+		this.nodes = new ArrayList<Node>();
+	}
 	
 	public Paths(List<Arc> arcs, List<Node> nodes) {
 		super();
@@ -39,6 +45,10 @@ public class Paths {
 	
 	public float getEnergy(Node[] nodes) {
 		return 0;
+	}
+	
+	public void addArc(Arc arc) {
+		this.arcs.add(arc);
 	}
 	
 }

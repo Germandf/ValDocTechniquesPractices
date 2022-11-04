@@ -10,6 +10,13 @@ public class Arc {
 		super();
 	}
 
+	public Arc(Node i, Node j, float w) {
+		super();
+		this.i = i;
+		this.j = j;
+		this.w = w;
+	}
+
 	public Node getI() {
 		return i;
 	}
