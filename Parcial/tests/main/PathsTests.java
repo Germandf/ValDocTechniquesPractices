@@ -1,6 +1,10 @@
 package main;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -8,42 +12,66 @@ import org.junit.jupiter.api.Test;
 public class PathsTests {
 
 	private Paths paths;
+	private List<Arc> arcs;
+	private List<Node> nodes;
 	
 	@BeforeAll
 	public void beforeAll() {
-		paths = new Paths();
-		var node1 = new Node(1, 50);
-		var node2 = new Node(2, 25);
-		var node3 = new Node(3, 20);
-		var node4 = new Node(4, 15);
-		var node5 = new Node(5, 55);
-		var node6 = new Node(6, 65);
-		var node7 = new Node(7, 45);
-		var node8 = new Node(8, 30);
-		var node9 = new Node(9, 10);
-		var arc1 = new Arc(node1, node2, 25);
-		var arc2 = new Arc(node3, node4, 10);
-		var arc3 = new Arc(node5, node6, 35);
-		var arc4 = new Arc(node7, node8, 20);
-		var arc5 = new Arc(node9, node1, 15);
-		var arc6 = new Arc(node3, node5, 25);
-		var arc7 = new Arc(node7, node9, 50);
-		var arc8 = new Arc(node2, node4, 25);
-		var arc9 = new Arc(node5, node8, 10);
-		paths.addArc(arc1);
-		paths.addArc(arc2);
-		paths.addArc(arc3);
-		paths.addArc(arc4);
-		paths.addArc(arc5);
-		paths.addArc(arc6);
-		paths.addArc(arc7);
-		paths.addArc(arc8);
-		paths.addArc(arc9);
+		arcs = new ArrayList<Arc>();
+		nodes = new ArrayList<Node>();
+		nodes.add(new Node(1, 50));
+		nodes.add(new Node(2, 25));
+		nodes.add(new Node(3, 20));
+		nodes.add(new Node(4, 15));
+		nodes.add(new Node(5, 55));
+		nodes.add(new Node(6, 60));
+		nodes.add(new Node(7, 45));
+		nodes.add(new Node(8, 30));
+		nodes.add(new Node(9, 10));
+		arcs.add(new Arc(nodes.get(0), nodes.get(1), 25));
+		arcs.add(new Arc(nodes.get(2), nodes.get(3), 10));
+		arcs.add(new Arc(nodes.get(4), nodes.get(5), 35));
+		arcs.add(new Arc(nodes.get(6), nodes.get(7), 20));
+		arcs.add(new Arc(nodes.get(8), nodes.get(0), 15));
+		arcs.add(new Arc(nodes.get(2), nodes.get(4), 25));
+		arcs.add(new Arc(nodes.get(6), nodes.get(8), 50));
+		arcs.add(new Arc(nodes.get(1), nodes.get(3), 25));
+		arcs.add(new Arc(nodes.get(4), nodes.get(7), 10));
+		paths = new Paths(arcs, nodes);
 	}
 	
 	@Test
-	public void demoTestMethod() {
-		assertTrue(true);
+	public void getEcoPath_shouldReturnEcoPath() {
+		var expectedNodes = new Node[2];
+		expectedNodes[0] = nodes.get(0);
+		expectedNodes[1] = nodes.get(1);
+		
+		var nodes = paths.getEcoPath(1, 9);
+		
+		assertArrayEquals(expectedNodes, nodes);
+	}
+	
+	@Test
+	public void getWorstPath_shouldReturnWorstPath() {
+		var expectedNodes = new Node[2];
+		expectedNodes[0] = nodes.get(0);
+		expectedNodes[1] = nodes.get(1);
+		
+		var nodes = paths.getWorstPath(1, 9);
+		
+		assertArrayEquals(expectedNodes, nodes);
+	}
+	
+	@Test
+	public void getEnergy_shouldReturnCorrectEnergy() {
+		var expectedEnergy = 50;
+		Node[] nodesParam = new Node[2];
+		nodesParam[0] = nodes.get(0);
+		nodesParam[1] = nodes.get(0);
+		
+		var energy = paths.getEnergy(nodesParam);
+		
+		assertEquals(energy, expectedEnergy, 0);
 	}
 	
 }
